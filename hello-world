@@ -1,0 +1,138 @@
+package Atividade161019;
+
+import Controller.PessoaController;
+import DAO.DAOPessoa;
+import static DAO.DAOPessoa.countPessoa;
+import Model.Pessoa;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
+public class Atividade161019 {
+
+    PessoaController pessoaControler = new PessoaController();
+
+    public static void main(String[] args) throws ParseException {
+
+        Atividade161019 programa = new Atividade161019();
+
+        Scanner sc = new Scanner(System.in);
+
+        int opcao = 0;
+        do {
+            System.out.println("Um Programa feito para Pessoas!");
+            System.out.println("Selecione uma opção: ");
+            System.out.println("1 - Inserir Pessoas");
+            System.out.println("2 - Listar Pessoas");
+            System.out.println("3 - Mostrar pessoa mais alta");
+            System.out.println("4 - Mostre a pessoa mais baixa");
+            System.out.println("5 - Mostre a pessoa mais gorda");
+            System.out.println("6 - Mostre a pessoa mais magra");
+            System.out.println("7 - Mostre a pessoa mais Velha");            
+            System.out.println("6 - Mostre a pessoa mais Nova");
+            System.out.println("0 - Sair");
+            opcao = sc.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    programa.loadPessoa();
+                    break;
+                case 2:
+                    programa.listPessoas();
+                    break;
+                case 3:
+                    programa.listMaisAlto();
+                    break;
+                case 4: 
+                    programa.listMaisBaixo();
+                    break;
+                case 5:
+                    programa.listMaisGordo();
+                    break;
+                case 6:
+                    programa.listMaisMagro();
+                    break;
+                case 7:
+                    programa.listMaisVelho();
+                    break;
+                case 8:
+                    programa.listMaisNovo();
+                    break;
+                
+            }
+        } while (opcao != 0);
+
+    }
+
+    private void loadPessoa() throws ParseException {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Programa de Pessoas!!");
+        System.out.println("Você deve informar alguns Dados: ");
+
+        while (DAOPessoa.countPessoa < DAOPessoa.pessoas.length) {
+            System.out.println(DAOPessoa.countPessoa + " Cadastradas.");
+
+            System.out.println("Nome: ");
+            String nome = sc.nextLine();
+            //nome = sc.nextLine();
+
+            System.out.println("Altura: ");
+            double altura = sc.nextDouble();
+
+            System.out.println("Peso: ");
+            double peso = sc.nextDouble();
+
+            System.out.println("Data de Nascimento: ");
+            String data = sc.nextLine();
+            data = sc.nextLine();
+            Date dtNascimento = new SimpleDateFormat("dd/MM/yyyy").parse(data);
+
+            this.pessoaControler.insertPessoa(
+                    new Pessoa(DAOPessoa.countPessoa, nome, peso, altura, dtNascimento)
+            );
+
+        }
+
+    }
+
+    private void listPessoas() {
+        System.out.println("Lista de Pessoas");
+        for (Pessoa p : DAOPessoa.pessoas) {
+            System.out.println(p);
+        }
+    }
+
+    private void listMaisAlto() {
+        System.out.println("A Pessoa Mais Alta");
+        System.out.println(pessoaControler.getMaisAlto());
+
+    }
+    
+    private void listMaisBaixo(){
+        System.out.println("A pessoa mais baixa é: ");
+        System.out.println(pessoaControler.getMaisBaixo());
+    }
+    
+    private void listMaisGordo(){
+        System.out.println("A pessoa mais gorda é");
+        System.out.println(pessoaControler.getMaisGordo());
+    }
+    
+    private void listMaisMagro(){
+        System.out.println("A pessoa mais magra é");
+        System.out.println(pessoaControler.getMaisMagro());
+    }
+    
+    private void listMaisVelho(){
+        System.out.println("A pessoa mais velha é: ");
+        System.out.println(pessoaControler.getMaisVelho());
+    }
+    
+    private void listMaisNovo() {
+        System.out.println("A pessoa mais nova é: ");
+        System.out.println(pessoaControler.getMaisNovo());
+    }
+
+}
